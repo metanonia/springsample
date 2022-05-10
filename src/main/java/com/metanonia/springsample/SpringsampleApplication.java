@@ -31,7 +31,7 @@ public class SpringsampleApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        String symbol = "BTCUSDT";
+        String symbol = "ETHUSDT";
         String ret = RestService.Rest(null, null, "GET", "/api/v3/klines?symbol="+symbol+"&interval=1m", null);
         JSONArray jsonArray = new JSONArray(ret);
 
@@ -79,6 +79,16 @@ public class SpringsampleApplication implements CommandLineRunner {
         log.info("<<getLastCandles>>");
         List<Candle>candles = candleService.getLastCandles(10);
         for(Candle item:candles) {
+            log.info(item.toString());
+        }
+        log.info("<<getLastCandlesBySymbol>>");
+        List<Candle>btc = candleService.getLastCandles("BTCUSDT", 5);
+        for(Candle item:btc) {
+            log.info(item.toString());
+        }
+        log.info("<<getLikeCandles>>");
+        List<Candle>lik = candleService.getLikeCandles("BTC", 2);
+        for(Candle item:lik) {
             log.info(item.toString());
         }
     }

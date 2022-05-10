@@ -5,8 +5,12 @@ import com.metanonia.springsample.model.Candle;
 import com.metanonia.springsample.repository.CandleRepository;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -27,5 +31,16 @@ public class CandleService {
 
     public List<HashMap<String,Object>> getFirst10Candles() {
         return candleMapper.findFirst10Candle();
+    }
+
+    public List<Candle> getLastCandles(int cnt) {
+        PageRequest pageable = PageRequest.of(0, cnt, Sort.by("candleId.timeStamp").descending().and(Sort.by("candleId.symbol")));
+        Page<Candle> page = candleRepository.findAll(pageable);
+        List<Candle> ret= new ArrayList<>();
+        for(Candle candle:page) {
+            ret.add(candle);
+        }
+
+        return ret;
     }
 }

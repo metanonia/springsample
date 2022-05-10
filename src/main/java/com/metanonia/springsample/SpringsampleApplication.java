@@ -66,14 +66,19 @@ public class SpringsampleApplication implements CommandLineRunner {
 
             candleService.save(candle);
         }
-
-        List<HashMap<String,Object>>candles = candleService.getLast10Candles();
-        for(HashMap<String,Object>item:candles) {
+        log.info("<<getLast10Candles>>");
+        List<HashMap<String,Object>>llist = candleService.getLast10Candles();
+        for(HashMap<String,Object>item:llist) {
             log.info(item.toString());
         }
-
+        log.info("<<getFirst10Candles>>");
         List<HashMap<String,Object>>flist = candleService.getFirst10Candles();
         for(HashMap<String,Object> item:flist) {
+            log.info(item.toString());
+        }
+        log.info("<<getLastCandles>>");
+        List<Candle>candles = candleService.getLastCandles(10);
+        for(Candle item:candles) {
             log.info(item.toString());
         }
     }
